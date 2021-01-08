@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { LoggingService } from '../logging.service';
+import { AccountsService } from '../accounts.service';
 
 @Component({
   selector: 'app-new-account',
@@ -8,17 +9,15 @@ import { LoggingService } from '../logging.service';
   providers: [LoggingService] //tells how to construct service
 })
 export class NewAccountComponent {
-  @Output() accountAdded = new EventEmitter<{name: string, status: string}>();
-  constructor(private loggingService: LoggingService) //creates a property and binds it;
+  constructor(private loggingService: LoggingService, private accountsService: AccountsService)
+  //creates a property and binds it;
   //add a type assignment for class that needs to be injected
+
    {
 
   }
   onCreateAccount(accountName: string, accountStatus: string) {
-    this.accountAdded.emit({
-      name: accountName,
-      status: accountStatus
-    });
+    this.accountsService.addAccount(accountName, accountStatus);
     this.loggingService.logStatusChange(accountStatus);
   }
 }
